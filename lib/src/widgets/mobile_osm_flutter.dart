@@ -262,7 +262,7 @@ class PlatformView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
-        key: mobileKey,
+        // key: mobileKey,
         viewType: 'plugins.dali.hamza/osmview',
         onPlatformViewCreated: onPlatformCreatedView,
         creationParams: getParams(
