@@ -71,8 +71,9 @@ class MobileOsmFlutter extends StatefulWidget {
 class MobileOsmFlutterState extends State<MobileOsmFlutter>
     with WidgetsBindingObserver, AndroidLifecycleMixin {
   MobileOSMController? _osmController;
-  var mobileKey = GlobalKey();
-  GlobalKey androidKey = GlobalKey();
+  // var mobileKey = GlobalKey();
+  // GlobalKey androidKey = GlobalKey();
+  late var mobileKey;
 
   GlobalKey get defaultMarkerKey => widget.globalKeys[0];
 
@@ -99,6 +100,7 @@ class MobileOsmFlutterState extends State<MobileOsmFlutter>
   @override
   void initState() {
     super.initState();
+    mobileKey=widget.key;
     keyUUID = Uuid().v4();
     isFirstLaunched = ValueNotifier(false);
     WidgetsBinding.instance.addObserver(this);
@@ -177,7 +179,7 @@ class MobileOsmFlutterState extends State<MobileOsmFlutter>
   void configChanged() async {
     setState(() {
       mobileKey = GlobalKey();
-      androidKey = GlobalKey();
+      // androidKey = GlobalKey();
     });
   }
 
@@ -196,7 +198,7 @@ class MobileOsmFlutterState extends State<MobileOsmFlutter>
   Widget build(BuildContext context) {
     return PlatformView(
       mobileKey: mobileKey,
-      androidKey: androidKey,
+      // androidKey: androidKey,
       onPlatformCreatedView: _onPlatformViewCreated,
       uuidMapCache: keyUUID,
       configuration: (
@@ -247,12 +249,12 @@ class MobileOsmFlutterState extends State<MobileOsmFlutter>
 class PlatformView extends StatelessWidget {
   final Function(int) onPlatformCreatedView;
   final Key? mobileKey;
-  final Key? androidKey;
+  // final Key? androidKey;
   final String uuidMapCache;
   final MobileInitConfiguration configuration;
   const PlatformView({
     this.mobileKey,
-    this.androidKey,
+    // this.androidKey,
     required this.onPlatformCreatedView,
     required this.uuidMapCache,
     required this.configuration,
@@ -277,7 +279,7 @@ class PlatformView extends StatelessWidget {
       );
     }
     return AndroidView(
-      key: androidKey,
+      key: mobileKey,
       viewType: 'plugins.dali.hamza/osmview',
       onPlatformViewCreated: onPlatformCreatedView,
       creationParams: getParams(
